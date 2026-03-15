@@ -16,7 +16,7 @@
       "outputs": [],
       "properties": {},
       "widgets_values": [
-        "MatAnyone2 — Video Matting (VHS)\n\n1. Load a video → Queue once → Editor auto-opens on first frame\n2. Left-click = positive point · Right-click = negative point → Apply\n3. Queue again → Full matte renders\n\nModels (auto-downloaded on first use):\n• MatAnyone 2     github.com/pq-yang/MatAnyone2/releases  →  models/matanyone/\n• SAM ViT-H       dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth  →  models/sams/\n\nRequires: ComfyUI-VideoHelperSuite  ·  github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+        "MatAnyone2 — Video Matting (VHS)\n\nBundled starter clip: matanyone2-demo-input.mp4\ninstall.py copies it into ComfyUI/input so this demo queues cleanly.\nSwap the Load Video node to your own footage any time.\n\n1. Queue once → Editor auto-opens on first frame\n2. Left-click = positive point · Right-click = negative point → Apply\n3. Queue again → Full matte renders\n\nModels (auto-downloaded on first use):\n• MatAnyone 2     github.com/pq-yang/MatAnyone2/releases  →  models/matanyone/\n• SAM ViT-H       dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth  →  models/sams/\n\nRequires: ComfyUI-VideoHelperSuite  ·  github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
       ],
       "color": "#845b1c",
       "bgcolor": "#1d1309"
@@ -55,7 +55,7 @@
       ],
       "properties": { "Node name for S&R": "VHS_LoadVideo" },
       "widgets_values": {
-        "video": "",
+        "video": "matanyone2-demo-input.mp4",
         "force_rate": 0,
         "force_size": "Disabled",
         "custom_width": 512,
@@ -63,7 +63,20 @@
         "frame_load_cap": 0,
         "skip_first_frames": 0,
         "select_every_nth": 1,
-        "choose video to upload": "image"
+        "choose video to upload": "image",
+        "videopreview": {
+          "hidden": false,
+          "paused": false,
+          "params": {
+            "frame_load_cap": 0,
+            "skip_first_frames": 0,
+            "force_rate": 0,
+            "filename": "matanyone2-demo-input.mp4",
+            "type": "input",
+            "format": "video/mp4",
+            "select_every_nth": 1
+          }
+        }
       },
       "color": "#2e607c",
       "bgcolor": "#1a3a4c"

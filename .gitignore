@@ -5,8 +5,9 @@ __pycache__/
 dist/
 build/
 
-# Vendored repos (cloned by install.py)
-vendor/
+# Bundled vendor sources
+vendor/**/__pycache__/
+vendor/**/*.pyc
 models/
 
 # ComfyUI outputs

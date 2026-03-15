@@ -15,7 +15,8 @@ Interactive video matting inside ComfyUI with a built-in SAM point editor and Ma
 - **Two-pass interactive workflow**: fast first queue to open the editor, full second queue to render the matte.
 - **Built-in SAM overlay**: positive and negative point editing happens directly in ComfyUI.
 - **Multi-target masking**: create and compare multiple mask targets before committing.
-- **Pinned vendor snapshots**: installs pull known-good MatAnyone2 and Segment Anything source snapshots into `vendor/`.
+- **Pinned vendor snapshots**: the package ships known-good MatAnyone2 and Segment Anything source snapshots in `vendor/`.
+- **Bundled starter clip**: the sample workflow ships with a tiny demo video that `install.py` copies into `ComfyUI/input/`.
 - **Manager-ready packaging**: `requirements.txt`, `install.py`, workflow example, and registry metadata are all included.
 
 ## Installation
@@ -29,7 +30,7 @@ Registry page: [registry.comfy.org/nodes/matanyone2-video-matting](https://regis
 Manager will:
 
 1. Install Python dependencies from `requirements.txt`
-2. Run `install.py` to fetch the pinned MatAnyone2 and SAM vendor snapshots
+2. Run `install.py` to validate the bundled vendor snapshots and copy `matanyone2-demo-input.mp4` into `ComfyUI/input/`
 3. Ask for a ComfyUI restart
 
 ### Manual Install
@@ -63,6 +64,8 @@ Models download automatically on first use if they are missing.
 
 `workflows/matanyone2_demo.json` is a ready-to-run example that wires video loading, frame selection, the interactive editor, and final matte export.
 
+It defaults to the bundled `matanyone2-demo-input.mp4` starter clip that `install.py` copies into `ComfyUI/input/`. Swap the `Load Video` node to your own footage whenever you are ready.
+
 ```text
 LoadVideo -> SliceFrames -> SelectFrame -> Interactive SAM -> Matte -> SaveVideo x3
 ```
@@ -70,7 +73,7 @@ LoadVideo -> SliceFrames -> SelectFrame -> Interactive SAM -> Matte -> SaveVideo
 How to use it:
 
 1. Drag `workflows/matanyone2_demo.json` onto the ComfyUI canvas.
-2. Load a source video.
+2. Queue once on the bundled starter clip, or replace `Load Video` with your own clip first.
 3. Queue once to open the editor on the first frame.
 4. Left-click for foreground points and right-click for background points.
 5. Click `Apply` in the editor.
@@ -112,6 +115,8 @@ Nodes are grouped under `MatAnyone2` and `MatAnyone2/SAM` in the Add Node menu.
 
 - If the editor does not open, queue the workflow once so the first-frame preview exists.
 - If the demo workflow shows missing video nodes, install VideoHelperSuite first.
+- If `Load Video` is blank or points at `/input/`, rerun `install.py` so the bundled demo clip is copied into `ComfyUI/input/`, or choose your own video in the VHS node before queueing.
+- If ComfyUI Manager shows a security warning for network access, you are likely on an older registry build from before the vendor sources were bundled directly in the package.
 - If VRAM is tight, use a smaller SAM variant and lower `max_internal_size`.
 - If you already keep checkpoints elsewhere, pass an explicit `checkpoint_path` to the loader nodes.
 

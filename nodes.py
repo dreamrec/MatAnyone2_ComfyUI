@@ -738,6 +738,8 @@ def _close_interactive_sam_session(session_id: str) -> None:
 
 
 class MatAnyoneModelLoader:
+    DESCRIPTION = "Loads a MatAnyone or MatAnyone2 checkpoint and auto-downloads it when no path is provided."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -767,6 +769,8 @@ class MatAnyoneModelLoader:
 
 
 class MatAnyoneSAMLoader:
+    DESCRIPTION = "Loads a Segment Anything checkpoint for scripted or reusable SAM refinement."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -796,6 +800,8 @@ class MatAnyoneSAMLoader:
 
 
 class MatAnyoneSliceFrames:
+    DESCRIPTION = "Slices an IMAGE batch down to the frame range you want to edit or matte."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -825,6 +831,8 @@ class MatAnyoneSliceFrames:
 
 
 class MatAnyoneSelectFrame:
+    DESCRIPTION = "Extracts one frame from an IMAGE batch for interactive masking or prompt setup."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -848,6 +856,8 @@ class MatAnyoneSelectFrame:
 
 
 class MatAnyonePromptStart:
+    DESCRIPTION = "Creates an empty SAM prompt container for point-based edits."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {"required": {}}
@@ -862,6 +872,8 @@ class MatAnyonePromptStart:
 
 
 class MatAnyonePromptFromText:
+    DESCRIPTION = "Parses x,y,+/- lines into a reusable SAM prompt structure."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -887,6 +899,8 @@ class MatAnyonePromptFromText:
 
 
 class MatAnyoneAddPoint:
+    DESCRIPTION = "Adds one positive or negative point to an existing SAM prompt."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -911,6 +925,8 @@ class MatAnyoneAddPoint:
 
 
 class MatAnyoneSAMRefine:
+    DESCRIPTION = "Runs SAM against a frame and prompt, returning the chosen mask, preview, logits, and score."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -984,6 +1000,8 @@ class MatAnyoneSAMRefine:
 
 
 class MatAnyoneMergeMasks:
+    DESCRIPTION = "Combines up to four masks into one thresholded output mask."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -1015,6 +1033,8 @@ class MatAnyoneMergeMasks:
 
 
 class MatAnyonePreviewMasks:
+    DESCRIPTION = "Draws one or more mask overlays on the source image for quick inspection."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -1055,6 +1075,8 @@ class MatAnyonePreviewMasks:
 
 
 class MatAnyoneInteractiveSAM:
+    DESCRIPTION = "Opens the built-in multi-target SAM editor and returns the merged first-frame mask."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {
@@ -1153,6 +1175,8 @@ class MatAnyoneInteractiveSAM:
 
 
 class MatAnyoneMatte:
+    DESCRIPTION = "Propagates the first-frame mask through the clip and returns foreground, alpha, and preview outputs."
+
     @classmethod
     def INPUT_TYPES(cls):
         return {

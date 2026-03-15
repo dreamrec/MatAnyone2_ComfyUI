@@ -23,16 +23,24 @@ jobs:
         run: |
           python -m compileall __init__.py nodes.py install.py
           python - <<'PY'
+          import json
           import tomllib
           from pathlib import Path
 
           pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
           assert pyproject["project"]["name"] == "matanyone2-video-matting"
+          assert pyproject["tool"]["comfy"]["requires-comfyui"] == ">=0.17.2"
           assert Path("README.md").exists()
           assert Path("LICENSE").exists()
           assert Path("assets/registry-banner-20260315b.svg").exists()
           assert Path("assets/demo-showcase-20260315.png").exists()
+          assert Path("assets/matanyone2-demo-input.mp4").exists()
+          assert Path("vendor/MatAnyone2/matanyone2/model/matanyone2.py").exists()
+          assert Path("vendor/segment-anything/segment_anything/predictor.py").exists()
           assert Path("web/matanyone_editor.js").exists()
           assert Path("workflows/matanyone2_demo.json").exists()
+          workflow = json.loads(Path("workflows/matanyone2_demo.json").read_text(encoding="utf-8"))
+          load_video = next(node for node in workflow["nodes"] if node["type"] == "VHS_LoadVideo")
+          assert load_video["widgets_values"]["video"] == "matanyone2-demo-input.mp4"
           print("Smoke validation passed.")
           PY
