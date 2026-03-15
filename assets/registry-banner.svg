@@ -1,33 +1,46 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 900" role="img" aria-labelledby="title desc">
   <title id="title">MatAnyone2 — Interactive Video Matting for ComfyUI</title>
-  <desc id="desc">Swiss-Japanese banner with minimal geometric figures showing video matting pipeline.</desc>
+  <desc id="desc">Vectorized jellyfish-parasol figure with coral flowers — from the actual MatAnyone2 demo.</desc>
 
   <defs>
-    <!-- Deep indigo-black -->
+    <!-- Deep background -->
     <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#0a0a18"/>
       <stop offset="100%" stop-color="#0e0e1c"/>
     </linearGradient>
 
-    <!-- Scene panel — twilight gradient -->
-    <linearGradient id="twilight" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#1e1836"/>
-      <stop offset="35%" stop-color="#2a1e3e"/>
-      <stop offset="60%" stop-color="#1a1430"/>
-      <stop offset="100%" stop-color="#0e0a1e"/>
+    <!-- Scene background — dark rich -->
+    <linearGradient id="scene-bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#08060e"/>
+      <stop offset="40%" stop-color="#0c0a16"/>
+      <stop offset="100%" stop-color="#14101e"/>
     </linearGradient>
 
-    <!-- Warm skin gradient -->
-    <linearGradient id="skin" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#e8b896"/>
-      <stop offset="100%" stop-color="#d4a07a"/>
+    <!-- Crimson/magenta gown gradient — warm, contrasts with teal mask -->
+    <linearGradient id="gown" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#c83868"/>
+      <stop offset="40%" stop-color="#a82850"/>
+      <stop offset="100%" stop-color="#781838"/>
     </linearGradient>
 
-    <!-- Checker -->
-    <pattern id="checker" width="20" height="20" patternUnits="userSpaceOnUse">
-      <rect width="20" height="20" fill="#101020"/>
-      <rect width="10" height="10" fill="#1a1a30"/>
-      <rect x="10" y="10" width="10" height="10" fill="#1a1a30"/>
+    <!-- Fan/parasol gradient — warm gold/amber -->
+    <linearGradient id="fan-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8b848"/>
+      <stop offset="100%" stop-color="#c88828"/>
+    </linearGradient>
+
+    <!-- Coral orange gradient -->
+    <radialGradient id="coral" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#e87040"/>
+      <stop offset="60%" stop-color="#d44828"/>
+      <stop offset="100%" stop-color="#a83018"/>
+    </radialGradient>
+
+    <!-- Checker — classic Photoshop -->
+    <pattern id="checker" width="28" height="28" patternUnits="userSpaceOnUse">
+      <rect width="28" height="28" fill="#c0c0c0"/>
+      <rect width="14" height="14" fill="#e0e0e0"/>
+      <rect x="14" y="14" width="14" height="14" fill="#e0e0e0"/>
     </pattern>
 
     <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
@@ -39,12 +52,141 @@
     <filter id="neon" x="-10%" y="-200%" width="120%" height="500%">
       <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
     </filter>
+    <filter id="bloom" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="12"/>
+    </filter>
+
+    <!-- ====== REUSABLE FIGURE: Jellyfish-parasol with flowing gown ====== -->
+    <!-- Centered at x=180 in a 360-wide panel -->
+
+    <!-- Coral flower symbol -->
+    <g id="coral-flower">
+      <circle r="18" fill="url(#coral)"/>
+      <!-- Spiky petals -->
+      <line x1="0" y1="-18" x2="0" y2="-25" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="12.7" y1="-12.7" x2="17.7" y2="-17.7" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="18" y1="0" x2="25" y2="0" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="12.7" y1="12.7" x2="17.7" y2="17.7" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="0" y1="18" x2="0" y2="25" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-12.7" y1="12.7" x2="-17.7" y2="17.7" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-18" y1="0" x2="-25" y2="0" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="-12.7" y1="-12.7" x2="-17.7" y2="-17.7" stroke="#e87848" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Intermediate spikes -->
+      <line x1="6.4" y1="-16.8" x2="8.9" y2="-23.5" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="16.8" y1="-6.4" x2="23.5" y2="-8.9" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="16.8" y1="6.4" x2="23.5" y2="8.9" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="6.4" y1="16.8" x2="8.9" y2="23.5" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="-6.4" y1="16.8" x2="-8.9" y2="23.5" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="-16.8" y1="6.4" x2="-23.5" y2="8.9" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="-16.8" y1="-6.4" x2="-23.5" y2="-8.9" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <line x1="-6.4" y1="-16.8" x2="-8.9" y2="-23.5" stroke="#d85838" stroke-width="1.8" stroke-linecap="round"/>
+      <!-- Inner highlight -->
+      <circle r="8" fill="#f09060" opacity="0.5"/>
+    </g>
+
+    <!-- Small coral -->
+    <g id="coral-sm">
+      <circle r="12" fill="url(#coral)"/>
+      <line x1="0" y1="-12" x2="0" y2="-17" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <line x1="8.5" y1="-8.5" x2="12" y2="-12" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <line x1="12" y1="0" x2="17" y2="0" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <line x1="8.5" y1="8.5" x2="12" y2="12" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <line x1="0" y1="12" x2="0" y2="17" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <line x1="-8.5" y1="8.5" x2="-12" y2="12" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <line x1="-12" y1="0" x2="-17" y2="0" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <line x1="-8.5" y1="-8.5" x2="-12" y2="-12" stroke="#e87848" stroke-width="2" stroke-linecap="round"/>
+      <circle r="5" fill="#f09060" opacity="0.4"/>
+    </g>
+
+    <!-- Tiny coral -->
+    <g id="coral-xs">
+      <circle r="7" fill="url(#coral)"/>
+      <line x1="0" y1="-7" x2="0" y2="-11" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="5" y1="-5" x2="7.8" y2="-7.8" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="7" y1="0" x2="11" y2="0" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="5" y1="5" x2="7.8" y2="7.8" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="0" y1="7" x2="0" y2="11" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-5" y1="5" x2="-7.8" y2="7.8" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-7" y1="0" x2="-11" y2="0" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="-5" y1="-5" x2="-7.8" y2="-7.8" stroke="#e87848" stroke-width="1.5" stroke-linecap="round"/>
+    </g>
+
+    <!-- The full figure as a reusable group -->
+    <g id="figure">
+      <!-- Fan/parasol — large arc with comb teeth -->
+      <!-- Main fan arc -->
+      <path d="M30,130 Q40,20 180,10 Q320,20 330,130 Z" fill="url(#fan-grad)" opacity="0.9"/>
+      <!-- Fan rim — darker edge with teeth -->
+      <path d="M30,130 Q40,20 180,10 Q320,20 330,130" fill="none" stroke="#a07020" stroke-width="3"/>
+      <!-- Fan teeth/comb — radiating from the arc edge -->
+      <line x1="50" y1="110" x2="42" y2="130" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="70" y1="85" x2="58" y2="108" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="90" y1="65" x2="76" y2="90" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="110" y1="48" x2="96" y2="76" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="130" y1="34" x2="118" y2="64" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="150" y1="24" x2="140" y2="56" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="170" y1="16" x2="164" y2="50" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="190" y1="16" x2="196" y2="50" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="210" y1="24" x2="220" y2="56" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="230" y1="34" x2="242" y2="64" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="250" y1="48" x2="264" y2="76" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="270" y1="65" x2="284" y2="90" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="290" y1="85" x2="302" y2="108" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="310" y1="110" x2="318" y2="130" stroke="#e8c048" stroke-width="2.5" stroke-linecap="round"/>
+
+      <!-- Inner fan pattern — subtle arc lines -->
+      <path d="M60,115 Q180,40 300,115" fill="none" stroke="#d8a838" stroke-width="0.8" opacity="0.4"/>
+      <path d="M75,95 Q180,30 285,95" fill="none" stroke="#d8a838" stroke-width="0.8" opacity="0.3"/>
+
+      <!-- Tentacle/veil strands hanging from the fan -->
+      <line x1="80" y1="105" x2="90" y2="240" stroke="#c87838" stroke-width="1.2" opacity="0.5"/>
+      <line x1="110" y1="80" x2="115" y2="260" stroke="#c87838" stroke-width="1.2" opacity="0.45"/>
+      <line x1="140" y1="55" x2="142" y2="280" stroke="#c87838" stroke-width="1.2" opacity="0.4"/>
+      <line x1="160" y1="35" x2="160" y2="250" stroke="#c87838" stroke-width="1" opacity="0.35"/>
+      <line x1="200" y1="35" x2="200" y2="250" stroke="#c87838" stroke-width="1" opacity="0.35"/>
+      <line x1="220" y1="55" x2="218" y2="280" stroke="#c87838" stroke-width="1.2" opacity="0.4"/>
+      <line x1="250" y1="80" x2="245" y2="260" stroke="#c87838" stroke-width="1.2" opacity="0.45"/>
+      <line x1="280" y1="105" x2="270" y2="240" stroke="#c87838" stroke-width="1.2" opacity="0.5"/>
+
+      <!-- Head — small circle, face area -->
+      <circle cx="180" cy="155" r="16" fill="#e8ccc0"/>
+      <!-- Eyes — two dark dots -->
+      <circle cx="174" cy="153" r="2" fill="#1a2030"/>
+      <circle cx="186" cy="153" r="2" fill="#1a2030"/>
+
+      <!-- Flowing gown/dress — A-line from shoulders to floor -->
+      <path d="M148,172 C145,180 135,220 120,320 C108,400 90,500 70,620 L290,620 C270,500 252,400 240,320 C225,220 215,180 212,172 Z" fill="url(#gown)"/>
+      <!-- Gown inner fold lines -->
+      <path d="M165,200 C158,300 148,420 135,580" fill="none" stroke="#681830" stroke-width="1.2" opacity="0.4"/>
+      <path d="M195,200 C202,300 212,420 225,580" fill="none" stroke="#681830" stroke-width="1.2" opacity="0.4"/>
+      <path d="M180,185 C180,300 180,420 180,620" fill="none" stroke="#681830" stroke-width="0.8" opacity="0.25"/>
+
+      <!-- Gown highlight — left side shimmer -->
+      <path d="M148,172 C145,180 138,220 128,310 C118,380 105,470 92,580 L110,580 C120,470 130,380 138,310 C148,220 152,180 155,172 Z" fill="#e85878" opacity="0.2"/>
+
+      <!-- Neck/collar area -->
+      <rect x="168" y="168" width="24" height="8" rx="4" fill="#d8a040"/>
+    </g>
+
+    <!-- Figure silhouette for alpha (same shape, single color) -->
+    <g id="figure-silhouette">
+      <path d="M30,130 Q40,20 180,10 Q320,20 330,130 Z" fill="#ffffff"/>
+      <line x1="80" y1="105" x2="90" y2="240" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="110" y1="80" x2="115" y2="260" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="140" y1="55" x2="142" y2="280" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="160" y1="35" x2="160" y2="250" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="200" y1="35" x2="200" y2="250" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="220" y1="55" x2="218" y2="280" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="250" y1="80" x2="245" y2="260" stroke="#ffffff" stroke-width="1.5"/>
+      <line x1="280" y1="105" x2="270" y2="240" stroke="#ffffff" stroke-width="1.5"/>
+      <circle cx="180" cy="155" r="16" fill="#ffffff"/>
+      <path d="M148,172 C145,180 135,220 120,320 C108,400 90,500 70,620 L290,620 C270,500 252,400 240,320 C225,220 215,180 212,172 Z" fill="#ffffff"/>
+      <rect x="168" y="168" width="24" height="8" rx="4" fill="#ffffff"/>
+    </g>
   </defs>
 
   <!-- === BACKGROUND === -->
   <rect width="2100" height="900" fill="url(#bg)"/>
-
-  <!-- Warm ambient light — center -->
   <ellipse cx="1050" cy="420" rx="800" ry="380" fill="#ff2d78" opacity="0.012" filter="url(#soft)"/>
 
   <!-- === TOP ACCENT — vermillion === -->
@@ -52,112 +194,167 @@
   <rect y="0" width="2100" height="8" fill="#d4402a" opacity="0.06" filter="url(#neon)"/>
 
   <!-- === LEFT: TYPOGRAPHY === -->
-
-  <!-- Vermillion accent bar — hanko style -->
   <rect x="78" y="284" width="4" height="48" rx="2" fill="#d4402a"/>
-
-  <!-- Label — kincha gold -->
   <text x="96" y="316" fill="#c9a060" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="6.5">COMFYUI CUSTOM NODE</text>
-
-  <!-- Title — bright, high contrast -->
   <text x="72" y="444" fill="#f2efe8" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="126" font-weight="800" letter-spacing="-5">MatAnyone2</text>
-
-  <!-- Subtitle -->
   <text x="80" y="510" fill="#7a6e96" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="34" font-weight="400" letter-spacing="1">Interactive Video Matting</text>
-
-  <!-- Vermillion rule -->
   <rect x="80" y="538" width="52" height="2.5" rx="1" fill="#d4402a" opacity="0.55"/>
-
-  <!-- Tagline -->
   <text x="80" y="590" fill="#3e3858" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="500" letter-spacing="0.3">Click points. Propagate. Done.</text>
 
-  <!-- === PANEL 1: SELECT === -->
+  <!-- ============================================================ -->
+  <!-- === PANEL 1: SELECT — Full scene with corals + SAM points === -->
+  <!-- ============================================================ -->
   <g transform="translate(840 80)">
-    <rect width="360" height="700" rx="14" fill="url(#twilight)"/>
+    <rect width="360" height="700" rx="14" fill="url(#scene-bg)"/>
 
-    <!-- Warm horizon glow -->
-    <ellipse cx="180" cy="220" rx="180" ry="40" fill="#d4402a" opacity="0.06" filter="url(#soft)"/>
+    <!-- ====== RICH ENVIRONMENT — trees, ground, vegetation ====== -->
 
-    <!-- Ground plane -->
-    <rect y="440" width="360" height="260" rx="0" fill="#0c081a" opacity="0.6"/>
+    <!-- Ground plane — dark earth, covers bottom 40% -->
+    <rect y="440" width="360" height="260" rx="0" fill="#1a1410"/>
+    <!-- Ground surface line -->
+    <rect y="438" width="360" height="3" fill="#2a2018" opacity="0.8"/>
+    <!-- Ground texture — subtle horizontal lines -->
+    <rect y="480" width="360" height="1" fill="#2a2018" opacity="0.3"/>
+    <rect y="530" width="360" height="1" fill="#221a12" opacity="0.25"/>
+    <rect y="580" width="360" height="1" fill="#221a12" opacity="0.2"/>
 
-    <!-- Warm glow behind figure -->
-    <ellipse cx="180" cy="380" rx="100" ry="180" fill="#d4a07a" opacity="0.06" filter="url(#soft)"/>
+    <!-- Background trees — far, darker, smaller -->
+    <!-- Far left tree cluster -->
+    <rect x="12" y="320" width="6" height="120" rx="3" fill="#1a2818"/>
+    <circle cx="15" cy="300" r="22" fill="#1a3018" opacity="0.7"/>
+    <circle cx="8" cy="310" r="16" fill="#162814" opacity="0.6"/>
 
-    <!-- FIGURE — ultra-simple geometric: circle head + rounded rect body -->
-    <!-- Head -->
-    <circle cx="180" cy="220" r="42" fill="url(#skin)"/>
-    <!-- Hair — simple cap shape -->
-    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#1c1418"/>
-    <!-- Body/torso — single rounded rect -->
-    <rect x="110" y="274" width="140" height="240" rx="28" fill="#2e4a72"/>
-    <!-- Shoulder curves -->
-    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#2e4a72"/>
-    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#2e4a72"/>
-    <!-- Neck -->
-    <rect x="164" y="254" width="32" height="28" rx="8" fill="url(#skin)"/>
+    <!-- Far center-left tree -->
+    <rect x="55" y="290" width="7" height="150" rx="3" fill="#1a2818"/>
+    <circle cx="58" cy="268" r="28" fill="#1a3418" opacity="0.65"/>
+    <circle cx="48" cy="280" r="18" fill="#162814" opacity="0.55"/>
 
-    <!-- SAM MASK OVERLAY — the teal selection tint SAM shows on selected region -->
-    <!-- Matches the figure shape exactly, semi-transparent -->
-    <circle cx="180" cy="220" r="42" fill="#22ccaa" opacity="0.3"/>
-    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#22ccaa" opacity="0.3"/>
-    <rect x="110" y="274" width="140" height="240" rx="28" fill="#22ccaa" opacity="0.3"/>
-    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#22ccaa" opacity="0.3"/>
-    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#22ccaa" opacity="0.3"/>
-    <rect x="164" y="254" width="32" height="28" rx="8" fill="#22ccaa" opacity="0.3"/>
-    <!-- Mask edge outline — dashed, like a selection boundary -->
-    <circle cx="180" cy="220" r="43" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/>
-    <rect x="109" y="273" width="142" height="242" rx="29" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/>
-    <ellipse cx="110" cy="300" rx="31" ry="25" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.35"/>
-    <ellipse cx="250" cy="300" rx="31" ry="25" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.35"/>
+    <!-- Far right trees -->
+    <rect x="300" y="310" width="6" height="130" rx="3" fill="#1a2818"/>
+    <circle cx="303" cy="290" r="24" fill="#1a3018" opacity="0.7"/>
+    <rect x="330" y="280" width="7" height="160" rx="3" fill="#1a2818"/>
+    <circle cx="333" cy="256" r="30" fill="#1a3418" opacity="0.6"/>
+    <circle cx="345" cy="270" r="18" fill="#162814" opacity="0.5"/>
 
-    <!-- SAM FOREGROUND POINTS — bright green -->
-    <circle cx="180" cy="210" r="12" fill="#22ff6e" opacity="0.2" filter="url(#glow)"/>
-    <circle cx="180" cy="210" r="7.5" fill="#22ff6e"/>
-    <circle cx="180" cy="210" r="3" fill="#fff"/>
+    <!-- Mid-ground bushes/shrubs — both sides -->
+    <!-- Left bush cluster -->
+    <ellipse cx="20" cy="445" rx="28" ry="18" fill="#1e3016" opacity="0.8"/>
+    <ellipse cx="45" cy="450" rx="22" ry="14" fill="#223818" opacity="0.75"/>
+    <ellipse cx="10" cy="455" rx="18" ry="12" fill="#1a2814" opacity="0.7"/>
 
-    <circle cx="160" cy="360" r="12" fill="#22ff6e" opacity="0.2" filter="url(#glow)"/>
-    <circle cx="160" cy="360" r="7.5" fill="#22ff6e"/>
-    <circle cx="160" cy="360" r="3" fill="#fff"/>
+    <!-- Right bush cluster -->
+    <ellipse cx="340" cy="445" rx="28" ry="18" fill="#1e3016" opacity="0.8"/>
+    <ellipse cx="315" cy="450" rx="22" ry="14" fill="#223818" opacity="0.75"/>
+    <ellipse cx="352" cy="455" rx="16" ry="12" fill="#1a2814" opacity="0.7"/>
 
-    <circle cx="200" cy="460" r="12" fill="#22ff6e" opacity="0.2" filter="url(#glow)"/>
-    <circle cx="200" cy="460" r="7.5" fill="#22ff6e"/>
-    <circle cx="200" cy="460" r="3" fill="#fff"/>
+    <!-- Foreground plants — small grasses/ferns at base edges -->
+    <!-- Left grasses -->
+    <line x1="8" y1="442" x2="4" y2="418" stroke="#2a4020" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    <line x1="14" y1="442" x2="10" y2="412" stroke="#2a4020" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <line x1="20" y1="442" x2="24" y2="416" stroke="#284018" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <line x1="35" y1="445" x2="32" y2="420" stroke="#2a4020" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+    <!-- Right grasses -->
+    <line x1="342" y1="442" x2="346" y2="418" stroke="#2a4020" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    <line x1="348" y1="442" x2="352" y2="412" stroke="#2a4020" stroke-width="2" stroke-linecap="round" opacity="0.55"/>
+    <line x1="332" y1="442" x2="328" y2="420" stroke="#284018" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
 
-    <!-- SAM BACKGROUND POINTS — vermillion -->
-    <circle cx="46" cy="300" r="12" fill="#d4402a" opacity="0.2" filter="url(#glow)"/>
-    <circle cx="46" cy="300" r="7.5" fill="#d4402a"/>
-    <circle cx="46" cy="300" r="3" fill="#fff"/>
+    <!-- Coral flowers — scattered throughout the scene -->
+    <!-- Large corals in ground area -->
+    <use href="#coral-flower" transform="translate(40,500)"/>
+    <use href="#coral-flower" transform="translate(320,510)"/>
+    <use href="#coral-flower" transform="translate(80,560)"/>
+    <use href="#coral-flower" transform="translate(280,570)"/>
+    <use href="#coral-flower" transform="translate(160,600)"/>
+    <use href="#coral-flower" transform="translate(220,590)"/>
 
-    <circle cx="314" cy="480" r="12" fill="#d4402a" opacity="0.2" filter="url(#glow)"/>
-    <circle cx="314" cy="480" r="7.5" fill="#d4402a"/>
-    <circle cx="314" cy="480" r="3" fill="#fff"/>
+    <!-- Medium corals climbing up the sides -->
+    <use href="#coral-sm" transform="translate(22,460)"/>
+    <use href="#coral-sm" transform="translate(340,465)"/>
+    <use href="#coral-sm" transform="translate(55,540)"/>
+    <use href="#coral-sm" transform="translate(310,545)"/>
+    <use href="#coral-sm" transform="translate(130,620)"/>
+    <use href="#coral-sm" transform="translate(250,625)"/>
 
-    <text x="180" y="738" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">SELECT</text>
+    <!-- Small corals — scattered accents -->
+    <use href="#coral-xs" transform="translate(15,490)"/>
+    <use href="#coral-xs" transform="translate(350,495)"/>
+    <use href="#coral-xs" transform="translate(70,580)"/>
+    <use href="#coral-xs" transform="translate(300,585)"/>
+    <use href="#coral-xs" transform="translate(100,640)"/>
+    <use href="#coral-xs" transform="translate(260,645)"/>
+    <use href="#coral-xs" transform="translate(180,655)"/>
+    <use href="#coral-xs" transform="translate(35,555)"/>
+    <use href="#coral-xs" transform="translate(330,560)"/>
+
+    <!-- Bokeh / atmospheric particles -->
+    <circle cx="30" cy="200" r="3" fill="#e8c868" opacity="0.15"/>
+    <circle cx="330" cy="180" r="2.5" fill="#e8c868" opacity="0.12"/>
+    <circle cx="50" cy="350" r="4" fill="#d88848" opacity="0.1"/>
+    <circle cx="310" cy="370" r="3" fill="#e8c868" opacity="0.1"/>
+    <circle cx="25" cy="400" r="2" fill="#f0d878" opacity="0.12"/>
+    <circle cx="340" cy="390" r="2.5" fill="#f0d878" opacity="0.1"/>
+
+    <!-- Warm ambient glow behind figure -->
+    <ellipse cx="180" cy="380" rx="90" ry="200" fill="#c83868" opacity="0.05" filter="url(#soft)"/>
+
+    <!-- ====== The figure ====== -->
+    <use href="#figure" x="0" y="30"/>
+
+    <!-- ====== BLUE SAM MASK OVERLAY — bold, unmistakable selection ====== -->
+    <g opacity="0.58">
+      <path d="M30,160 Q40,50 180,40 Q320,50 330,160 Z" fill="#3377ff"/>
+      <circle cx="180" cy="185" r="16" fill="#3377ff"/>
+      <rect x="168" y="198" width="24" height="8" rx="4" fill="#3377ff"/>
+      <path d="M148,202 C145,210 135,250 120,350 C108,430 90,530 70,650 L290,650 C270,530 252,430 240,350 C225,250 215,210 212,202 Z" fill="#3377ff"/>
+    </g>
+    <!-- Bright blue edge outline -->
+    <path d="M28,162 Q38,48 180,38 Q322,48 332,162" fill="none" stroke="#5599ff" stroke-width="4" opacity="0.85"/>
+    <path d="M146,202 C143,210 133,250 118,350 C106,430 88,530 68,652 L292,652 C272,530 254,430 242,350 C227,250 217,210 214,202" fill="none" stroke="#5599ff" stroke-width="4" opacity="0.75"/>
+
+    <!-- SAM FOREGROUND POINTS — green, on the figure -->
+    <circle cx="180" cy="110" r="11" fill="#22ff6e" opacity="0.25" filter="url(#glow)"/>
+    <circle cx="180" cy="110" r="7" fill="#22ff6e"/>
+    <circle cx="180" cy="110" r="2.5" fill="#fff"/>
+
+    <circle cx="170" cy="310" r="11" fill="#22ff6e" opacity="0.25" filter="url(#glow)"/>
+    <circle cx="170" cy="310" r="7" fill="#22ff6e"/>
+    <circle cx="170" cy="310" r="2.5" fill="#fff"/>
+
+    <circle cx="175" cy="500" r="11" fill="#22ff6e" opacity="0.25" filter="url(#glow)"/>
+    <circle cx="175" cy="500" r="7" fill="#22ff6e"/>
+    <circle cx="175" cy="500" r="2.5" fill="#fff"/>
+
+    <!-- SAM BACKGROUND POINTS — red, on the environment -->
+    <circle cx="35" cy="500" r="11" fill="#d4402a" opacity="0.25" filter="url(#glow)"/>
+    <circle cx="35" cy="500" r="7" fill="#d4402a"/>
+    <circle cx="35" cy="500" r="2.5" fill="#fff"/>
+
+    <circle cx="325" cy="510" r="11" fill="#d4402a" opacity="0.25" filter="url(#glow)"/>
+    <circle cx="325" cy="510" r="7" fill="#d4402a"/>
+    <circle cx="325" cy="510" r="2.5" fill="#fff"/>
+
+    <text x="180" y="688" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">SELECT</text>
   </g>
 
-  <!-- Arrow 1 — kincha gold -->
+  <!-- Arrow 1 -->
   <g transform="translate(1212 430)" opacity="0.3">
     <line x1="0" y1="0" x2="28" y2="0" stroke="#c9a060" stroke-width="1.5"/>
     <polygon points="28,-4 36,0 28,4" fill="#c9a060"/>
   </g>
 
-  <!-- === PANEL 2: FOREGROUND === -->
+  <!-- ============================================== -->
+  <!-- === PANEL 2: FOREGROUND — extracted, black bg === -->
+  <!-- ============================================== -->
   <g transform="translate(1260 80)">
-    <rect width="360" height="700" rx="14" fill="#040408"/>
+    <rect width="360" height="700" rx="14" fill="#020204"/>
 
-    <!-- Subtle rim light -->
-    <ellipse cx="180" cy="380" rx="60" ry="120" fill="#c9a060" opacity="0.02" filter="url(#soft)"/>
+    <!-- Very subtle warm rim bloom -->
+    <ellipse cx="180" cy="350" rx="80" ry="200" fill="#c83868" opacity="0.03" filter="url(#soft)"/>
 
-    <!-- Same figure — clean black bg -->
-    <circle cx="180" cy="220" r="42" fill="url(#skin)"/>
-    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#1c1418"/>
-    <rect x="110" y="274" width="140" height="240" rx="28" fill="#2e4a72"/>
-    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#2e4a72"/>
-    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#2e4a72"/>
-    <rect x="164" y="254" width="32" height="28" rx="8" fill="url(#skin)"/>
+    <!-- Just the figure — no corals, no background clutter -->
+    <use href="#figure" x="0" y="30"/>
 
-    <text x="180" y="738" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">FOREGROUND</text>
+    <text x="180" y="688" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">FOREGROUND</text>
   </g>
 
   <!-- Arrow 2 -->
@@ -166,24 +363,19 @@
     <polygon points="28,-4 36,0 28,4" fill="#c9a060"/>
   </g>
 
-  <!-- === PANEL 3: ALPHA === -->
+  <!-- ================================================ -->
+  <!-- === PANEL 3: ALPHA — white silhouette on checker === -->
+  <!-- ================================================ -->
   <g transform="translate(1680 80)">
     <rect width="360" height="700" rx="14" fill="url(#checker)"/>
 
-    <!-- White matte — same simple shapes -->
-    <circle cx="180" cy="220" r="42" fill="#ffffff"/>
-    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#ffffff"/>
-    <rect x="110" y="274" width="140" height="240" rx="28" fill="#ffffff"/>
-    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#ffffff"/>
-    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#ffffff"/>
-    <rect x="164" y="254" width="32" height="28" rx="8" fill="#ffffff"/>
+    <!-- White matte silhouette -->
+    <use href="#figure-silhouette" x="0" y="30"/>
 
-    <text x="180" y="738" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">ALPHA</text>
+    <text x="180" y="688" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">ALPHA</text>
   </g>
 
   <!-- === BOTTOM === -->
   <text x="2024" y="862" fill="#2e2848" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" text-anchor="end">dreamrec</text>
-
-  <!-- Bottom accent — deep vermillion -->
   <rect y="897" width="2100" height="3" fill="#d4402a" opacity="0.25"/>
 </svg>
