@@ -10,6 +10,12 @@ VENDOR_ROOT = ROOT / "vendor"
 COMMIT_MARKER = ".vendor_commit"
 DEMO_VIDEO_NAME = "matanyone2-demo-input.mp4"
 DEMO_VIDEO_SOURCE = ROOT / "assets" / DEMO_VIDEO_NAME
+DEMO_WORKFLOW_SOURCE = ROOT / "workflows" / "matanyone2_demo.json"
+DEMO_WORKFLOW_NAMES = (
+    "matanyone2_demo.json",
+    "matanyone2_full_demo.json",
+    "matanyone2_vhs_demo.json",
+)
 
 VENDORS = (
     {
@@ -54,6 +60,20 @@ def _detect_input_directory() -> Path | None:
     return None
 
 
+def _detect_workflow_directory() -> Path | None:
+    try:
+        import folder_paths  # type: ignore
+
+        return (Path(folder_paths.get_user_directory()).resolve() / "default" / "workflows")
+    except Exception:
+        pass
+
+    for parent in ROOT.parents:
+        if parent.name == "custom_nodes":
+            return (parent.parent / "user" / "default" / "workflows").resolve()
+    return None
+
+
 def _file_sha256(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as file:
@@ -85,6 +105,31 @@ def ensure_demo_input_video() -> None:
     shutil.copy2(DEMO_VIDEO_SOURCE, destination)
 
 
+def ensure_demo_workflows() -> None:
+    if not DEMO_WORKFLOW_SOURCE.exists():
+        print(f"Bundled demo workflow missing at {DEMO_WORKFLOW_SOURCE}, skipping workflow sync.")
+        return
+
+    workflow_dir = _detect_workflow_directory()
+    if workflow_dir is None:
+        print("Could not locate ComfyUI workflow directory, skipping demo workflow sync.")
+        return
+
+    workflow_dir.mkdir(parents=True, exist_ok=True)
+    source_hash = _file_sha256(DEMO_WORKFLOW_SOURCE)
+
+    for workflow_name in DEMO_WORKFLOW_NAMES:
+        destination = workflow_dir / workflow_name
+        if destination.exists():
+            if _file_sha256(destination) == source_hash:
+                print(f"Using bundled demo workflow at {destination}")
+                continue
+            print(f"Refreshing bundled demo workflow at {destination}")
+        else:
+            print(f"Copying bundled demo workflow to {destination}")
+        shutil.copy2(DEMO_WORKFLOW_SOURCE, destination)
+
+
 def ensure_vendor_bundle(vendor: dict[str, str | Path | tuple[str, ...]]) -> None:
     repo_path = Path(vendor["path"])
     commit = str(vendor["commit"])
@@ -112,3 +157,4 @@ if __name__ == "__main__":
     for vendor in VENDORS:
         ensure_vendor_bundle(vendor)
     ensure_demo_input_video()
+    ensure_demo_workflows()

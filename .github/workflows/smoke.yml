@@ -37,7 +37,7 @@ jobs:
           assert Path("assets/matanyone2-demo-input.mp4").exists()
           assert Path("vendor/MatAnyone2/matanyone2/model/matanyone2.py").exists()
           assert Path("vendor/segment-anything/segment_anything/predictor.py").exists()
-          assert Path("web/matanyone_editor.js").exists()
+          assert Path("web/matanyone_editor_v2.js").exists()
           assert Path("workflows/matanyone2_demo.json").exists()
           workflow = json.loads(Path("workflows/matanyone2_demo.json").read_text(encoding="utf-8"))
           load_video = next(node for node in workflow["nodes"] if node["type"] == "VHS_LoadVideo")

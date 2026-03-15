@@ -4,6 +4,15 @@ import { api } from "/scripts/api.js";
 const NODE_NAME = "MatAnyoneInteractiveSAM";
 const STATE_WIDGET_NAME = "editor_state";
 const STYLE_ID = "matanyone-editor-style";
+const MAX_STATE_TEXT_LENGTH = 25000;
+const LEGACY_STATE_MARKERS = [
+  "data:image",
+  "\"preview_url\"",
+  "\"active_candidates\"",
+  "\"previewUrl\"",
+  "\"baseImageUrl\"",
+  "\"sourceViewUrl\""
+];
 
 let activeDialog = null;
 
@@ -283,11 +292,16 @@ function setWidgetValue(node, name, value) {
 }
 
 function safeParseState(rawState) {
-  if (!rawState || !String(rawState).trim()) {
+  const stateText = String(rawState || "");
+  if (!stateText.trim()) {
+    return { targets: [], active_index: 0 };
+  }
+  if (stateText.length > MAX_STATE_TEXT_LENGTH || LEGACY_STATE_MARKERS.some((marker) => stateText.includes(marker))) {
+    console.warn("[MatAnyone] Dropping stale editor_state payload and resetting it to compact point data.");
     return { targets: [], active_index: 0 };
   }
   try {
-    const parsed = JSON.parse(String(rawState));
+    const parsed = JSON.parse(stateText);
     if (!Array.isArray(parsed.targets)) {
       return { targets: [], active_index: 0 };
     }
@@ -321,6 +335,11 @@ function normalizeState(state) {
 
 function stringifyState(state) {
   return JSON.stringify(normalizeState(state), null, 2);
+}
+
+function compactSerializedState(rawState) {
+  const normalized = normalizeState(safeParseState(rawState));
+  return normalized.targets.length ? stringifyState(normalized) : "";
 }
 
 function summarizeState(state) {
@@ -448,6 +467,13 @@ function setupNode(node) {
     stateWidget.hidden = true;
     stateWidget.computeSize = () => [0, -4];
     stateWidget.__matanyoneHidden = true;
+  }
+  if (stateWidget) {
+    const rawState = String(stateWidget.value || "");
+    const compactState = compactSerializedState(rawState);
+    if (rawState !== compactState) {
+      setWidgetValue(node, STATE_WIDGET_NAME, compactState);
+    }
   }
 
   if (!node.__matanyoneEditorButton) {
