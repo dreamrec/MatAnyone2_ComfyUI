@@ -378,11 +378,12 @@ function getNodePreviewUrl(node) {
   if (typeof entry === "string") {
     return entry;
   }
-  if (entry.src) {
-    return entry.src;
-  }
+  // Prefer Comfy's filename metadata when available so we keep requests small.
   if (entry.filename) {
     return buildViewUrl(entry);
+  }
+  if (entry.src) {
+    return entry.src;
   }
   return null;
 }
@@ -397,15 +398,6 @@ async function loadImage(url) {
   });
 }
 
-function imageToDataUrl(image) {
-  const canvas = document.createElement("canvas");
-  canvas.width = image.naturalWidth;
-  canvas.height = image.naturalHeight;
-  const context = canvas.getContext("2d");
-  context.drawImage(image, 0, 0);
-  return canvas.toDataURL("image/png");
-}
-
 function resolvePreviewUrl(url) {
   if (!url) return url;
   // /view URLs need to go through ComfyUI's API base
@@ -413,6 +405,28 @@ function resolvePreviewUrl(url) {
     return api.apiURL ? api.apiURL(url) : url;
   }
   return url;
+}
+
+function extractViewPath(url) {
+  if (!url) {
+    return "";
+  }
+  if (url.startsWith("/view?")) {
+    return url;
+  }
+  const viewIndex = url.indexOf("/view?");
+  if (viewIndex >= 0) {
+    return url.substring(viewIndex);
+  }
+  try {
+    const parsed = new URL(url, window.location.origin);
+    if (parsed.pathname.endsWith("/view")) {
+      return `${parsed.pathname}${parsed.search}`;
+    }
+  } catch {
+    return "";
+  }
+  return "";
 }
 
 function updateEditorButton(node) {
@@ -638,18 +652,9 @@ class MatAnyoneEditorDialog {
     if (this.sessionId) {
       return;
     }
-    // Try sending the /view URL reference first (lightweight).
-    // Fall back to base64 data URL if the server returns an error.
-    let imagePayload = this.sourceViewUrl || "";
-    // Extract just the /view?... path from full URLs
-    if (imagePayload.includes("/view?")) {
-      const viewIndex = imagePayload.indexOf("/view?");
-      imagePayload = imagePayload.substring(viewIndex);
-    }
-    // If we couldn't extract a /view URL, fall back to base64
+    const imagePayload = extractViewPath(this.sourceViewUrl || this.baseImageUrl);
     if (!imagePayload.startsWith("/view?")) {
-      const image = await loadImage(this.sourceViewUrl || this.baseImageUrl);
-      imagePayload = imageToDataUrl(image);
+      throw new Error("Could not resolve the Comfy preview URL for this frame. Queue once, then reopen the editor.");
     }
     const response = await api.fetchApi("/matanyone2/interactive/create_session", {
       method: "POST",
