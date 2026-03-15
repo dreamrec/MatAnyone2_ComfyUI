@@ -1,0 +1,601 @@
+{
+  "id": "d4e5f6a7-b8c9-4d0e-af12-8ca5f75e3d77",
+  "revision": 2,
+  "last_node_id": 14,
+  "last_link_id": 17,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "Note",
+      "pos": [0, -220],
+      "size": [780, 180],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [],
+      "properties": {},
+      "widgets_values": [
+        "MatAnyone2 — Video Matting (VHS)\n\n1. Load a video → Queue once → Editor auto-opens on first frame\n2. Left-click = positive point · Right-click = negative point → Apply\n3. Queue again → Full matte renders\n\nModels (auto-downloaded on first use):\n• MatAnyone 2     github.com/pq-yang/MatAnyone2/releases  →  models/matanyone/\n• SAM ViT-H       dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth  →  models/sams/\n\nRequires: ComfyUI-VideoHelperSuite  ·  github.com/Kosinkadink/ComfyUI-VideoHelperSuite"
+      ],
+      "color": "#845b1c",
+      "bgcolor": "#1d1309"
+    },
+    {
+      "id": 2,
+      "type": "VHS_LoadVideo",
+      "pos": [40, 60],
+      "size": [700, 400],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "title": "Load Video",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [1]
+        },
+        {
+          "name": "frame_count",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "AUDIO",
+          "type": "AUDIO",
+          "links": [11, 13, 15]
+        },
+        {
+          "name": "video_info",
+          "type": "VHS_VIDEOINFO",
+          "links": []
+        }
+      ],
+      "properties": { "Node name for S&R": "VHS_LoadVideo" },
+      "widgets_values": {
+        "video": "",
+        "force_rate": 0,
+        "force_size": "Disabled",
+        "custom_width": 512,
+        "custom_height": 512,
+        "frame_load_cap": 0,
+        "skip_first_frames": 0,
+        "select_every_nth": 1,
+        "choose video to upload": "image"
+      },
+      "color": "#2e607c",
+      "bgcolor": "#1a3a4c"
+    },
+    {
+      "id": 3,
+      "type": "MatAnyoneSliceFrames",
+      "pos": [860, 60],
+      "size": [300, 110],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 1
+        },
+        {
+          "name": "start_frame",
+          "type": "INT",
+          "widget": { "name": "start_frame" },
+          "link": null
+        },
+        {
+          "name": "end_frame_exclusive",
+          "type": "INT",
+          "widget": { "name": "end_frame_exclusive" },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": [2, 16]
+        },
+        {
+          "name": "start_frame_used",
+          "type": "INT",
+          "links": []
+        },
+        {
+          "name": "end_frame_used",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": { "Node name for S&R": "MatAnyoneSliceFrames" },
+      "widgets_values": [0, -1],
+      "color": "#3b6e8c",
+      "bgcolor": "#1e3a4c"
+    },
+    {
+      "id": 4,
+      "type": "MatAnyoneSelectFrame",
+      "pos": [860, 220],
+      "size": [300, 80],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 2
+        },
+        {
+          "name": "frame_index",
+          "type": "INT",
+          "widget": { "name": "frame_index" },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "links": [3, 17]
+        },
+        {
+          "name": "frame_index_used",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": { "Node name for S&R": "MatAnyoneSelectFrame" },
+      "widgets_values": [0],
+      "color": "#3b6e8c",
+      "bgcolor": "#1e3a4c"
+    },
+    {
+      "id": 14,
+      "type": "PreviewImage",
+      "pos": [1220, 60],
+      "size": [300, 250],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "title": "Selected Frame",
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 17
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1"
+      },
+      "widgets_values": [],
+      "color": "#3b6e8c",
+      "bgcolor": "#1e3a4c"
+    },
+    {
+      "id": 5,
+      "type": "MatAnyoneInteractiveSAM",
+      "pos": [1680, 60],
+      "size": [360, 300],
+      "flags": {},
+      "order": 4,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "image",
+          "type": "IMAGE",
+          "link": 3
+        },
+        {
+          "name": "sam_model_type",
+          "type": "COMBO",
+          "widget": { "name": "sam_model_type" },
+          "link": null
+        },
+        {
+          "name": "checkpoint_path",
+          "type": "STRING",
+          "widget": { "name": "checkpoint_path" },
+          "link": null
+        },
+        {
+          "name": "device",
+          "type": "COMBO",
+          "widget": { "name": "device" },
+          "link": null
+        },
+        {
+          "name": "editor_state",
+          "type": "STRING",
+          "widget": { "name": "editor_state" },
+          "link": null
+        },
+        {
+          "name": "preview_opacity",
+          "type": "FLOAT",
+          "widget": { "name": "preview_opacity" },
+          "link": null
+        },
+        {
+          "name": "merge_threshold",
+          "type": "FLOAT",
+          "widget": { "name": "merge_threshold" },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "links": [4]
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": [5]
+        },
+        {
+          "name": "editor_state",
+          "type": "STRING",
+          "links": []
+        },
+        {
+          "name": "target_count",
+          "type": "INT",
+          "links": []
+        }
+      ],
+      "properties": { "Node name for S&R": "MatAnyoneInteractiveSAM" },
+      "widgets_values": ["vit_h", "", "auto", "", 0.65, 0.5],
+      "color": "#35674f",
+      "bgcolor": "#1a3528"
+    },
+    {
+      "id": 6,
+      "type": "PreviewImage",
+      "pos": [2100, 60],
+      "size": [300, 300],
+      "flags": {},
+      "order": 5,
+      "mode": 0,
+      "title": "SAM Mask Preview",
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 5
+        }
+      ],
+      "outputs": [],
+      "properties": {
+        "Node name for S&R": "PreviewImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1"
+      },
+      "widgets_values": [],
+      "color": "#35674f",
+      "bgcolor": "#1a3528"
+    },
+    {
+      "id": 7,
+      "type": "MatAnyoneModelLoader",
+      "pos": [860, 560],
+      "size": [300, 150],
+      "flags": {},
+      "order": 6,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model_name",
+          "type": "COMBO",
+          "widget": { "name": "model_name" },
+          "link": null
+        },
+        {
+          "name": "checkpoint_path",
+          "type": "STRING",
+          "widget": { "name": "checkpoint_path" },
+          "link": null
+        },
+        {
+          "name": "device",
+          "type": "COMBO",
+          "widget": { "name": "device" },
+          "link": null
+        }
+      ],
+      "outputs": [
+        {
+          "name": "matanyone_model",
+          "type": "MATANYONE_MODEL",
+          "links": [6]
+        }
+      ],
+      "properties": { "Node name for S&R": "MatAnyoneModelLoader" },
+      "widgets_values": ["MatAnyone 2", "", "auto"],
+      "color": "#6f5b2f",
+      "bgcolor": "#3a301a"
+    },
+    {
+      "id": 8,
+      "type": "MatAnyoneMatte",
+      "pos": [1220, 560],
+      "size": [420, 350],
+      "flags": {},
+      "order": 7,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "matanyone_model",
+          "type": "MATANYONE_MODEL",
+          "link": 6
+        },
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 16
+        },
+        {
+          "name": "first_frame_mask",
+          "type": "MASK",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "foreground",
+          "type": "IMAGE",
+          "links": [7]
+        },
+        {
+          "name": "alpha",
+          "type": "MASK",
+          "links": [8]
+        },
+        {
+          "name": "preview",
+          "type": "IMAGE",
+          "links": [9]
+        }
+      ],
+      "properties": { "Node name for S&R": "MatAnyoneMatte" },
+      "widgets_values": [10, 0.5, false, 10, 10, -1, 120, 255, 155],
+      "color": "#6f5b2f",
+      "bgcolor": "#3a301a"
+    },
+    {
+      "id": 9,
+      "type": "VHS_VideoCombine",
+      "pos": [1740, 560],
+      "size": [360, 160],
+      "flags": {},
+      "order": 8,
+      "mode": 0,
+      "title": "Preview Video",
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 9
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 11
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "properties": { "Node name for S&R": "VHS_VideoCombine" },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "matanyone2/preview",
+        "format": "video/h264-mp4",
+        "pingpong": false,
+        "save_output": true,
+        "crf": 19,
+        "pix_fmt": "yuv420p"
+      },
+      "color": "#7b3f5e",
+      "bgcolor": "#3d2030"
+    },
+    {
+      "id": 10,
+      "type": "VHS_VideoCombine",
+      "pos": [2160, 560],
+      "size": [360, 160],
+      "flags": {},
+      "order": 9,
+      "mode": 0,
+      "title": "Foreground Video",
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 7
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 13
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "properties": { "Node name for S&R": "VHS_VideoCombine" },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "matanyone2/foreground",
+        "format": "video/h264-mp4",
+        "pingpong": false,
+        "save_output": true,
+        "crf": 19,
+        "pix_fmt": "yuv420p"
+      },
+      "color": "#7b3f5e",
+      "bgcolor": "#3d2030"
+    },
+    {
+      "id": 12,
+      "type": "MaskToImage",
+      "pos": [1740, 780],
+      "size": [190, 30],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "mask",
+          "type": "MASK",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [10]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "MaskToImage",
+        "cnr_id": "comfy-core",
+        "ver": "0.5.1"
+      },
+      "widgets_values": [],
+      "color": "#7b3f5e",
+      "bgcolor": "#3d2030"
+    },
+    {
+      "id": 11,
+      "type": "VHS_VideoCombine",
+      "pos": [1740, 840],
+      "size": [360, 160],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "title": "Alpha Matte Video",
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 10
+        },
+        {
+          "name": "audio",
+          "type": "AUDIO",
+          "link": 15
+        }
+      ],
+      "outputs": [
+        {
+          "name": "Filenames",
+          "type": "VHS_FILENAMES",
+          "links": []
+        }
+      ],
+      "properties": { "Node name for S&R": "VHS_VideoCombine" },
+      "widgets_values": {
+        "frame_rate": 24,
+        "loop_count": 0,
+        "filename_prefix": "matanyone2/alpha",
+        "format": "video/h264-mp4",
+        "pingpong": false,
+        "save_output": true,
+        "crf": 19,
+        "pix_fmt": "yuv420p"
+      },
+      "color": "#7b3f5e",
+      "bgcolor": "#3d2030"
+    }
+  ],
+  "links": [
+    [1,  2, 0,  3, 0, "IMAGE"],
+    [2,  3, 0,  4, 0, "IMAGE"],
+    [3,  4, 0,  5, 0, "IMAGE"],
+    [4,  5, 0,  8, 2, "MASK"],
+    [5,  5, 1,  6, 0, "IMAGE"],
+    [6,  7, 0,  8, 0, "MATANYONE_MODEL"],
+    [7,  8, 0, 10, 0, "IMAGE"],
+    [8,  8, 1, 12, 0, "MASK"],
+    [9,  8, 2,  9, 0, "IMAGE"],
+    [10, 12, 0, 11, 0, "IMAGE"],
+    [11, 2, 2,  9, 1, "AUDIO"],
+    [13, 2, 2, 10, 1, "AUDIO"],
+    [15, 2, 2, 11, 1, "AUDIO"],
+    [16, 3, 0,  8, 1, "IMAGE"],
+    [17, 4, 0, 14, 0, "IMAGE"]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1 · Video Input",
+      "bounding": [0, 0, 800, 500],
+      "color": "#2e607c",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 2,
+      "title": "2 · Frame Selection",
+      "bounding": [820, 0, 800, 500],
+      "color": "#3b6e8c",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 3,
+      "title": "3 · SAM First-Frame Masking",
+      "bounding": [1640, 0, 820, 500],
+      "color": "#35674f",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 4,
+      "title": "4 · Video Matting",
+      "bounding": [820, 520, 800, 500],
+      "color": "#6f5b2f",
+      "font_size": 24,
+      "flags": {}
+    },
+    {
+      "id": 5,
+      "title": "5 · Video Outputs",
+      "bounding": [1640, 520, 920, 500],
+      "color": "#7b3f5e",
+      "font_size": 24,
+      "flags": {}
+    }
+  ],
+  "config": {},
+  "extra": {
+    "ds": {
+      "scale": 0.42,
+      "offset": [300, 400]
+    }
+  },
+  "version": 0.4,
+  "definitions": {}
+}

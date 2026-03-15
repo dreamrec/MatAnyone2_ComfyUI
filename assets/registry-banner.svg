@@ -1,0 +1,189 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 900" role="img" aria-labelledby="title desc">
+  <title id="title">MatAnyone2 — Interactive Video Matting for ComfyUI</title>
+  <desc id="desc">Swiss-Japanese banner with minimal geometric figures showing video matting pipeline.</desc>
+
+  <defs>
+    <!-- Deep indigo-black -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#0a0a18"/>
+      <stop offset="100%" stop-color="#0e0e1c"/>
+    </linearGradient>
+
+    <!-- Scene panel — twilight gradient -->
+    <linearGradient id="twilight" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1e1836"/>
+      <stop offset="35%" stop-color="#2a1e3e"/>
+      <stop offset="60%" stop-color="#1a1430"/>
+      <stop offset="100%" stop-color="#0e0a1e"/>
+    </linearGradient>
+
+    <!-- Warm skin gradient -->
+    <linearGradient id="skin" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e8b896"/>
+      <stop offset="100%" stop-color="#d4a07a"/>
+    </linearGradient>
+
+    <!-- Checker -->
+    <pattern id="checker" width="20" height="20" patternUnits="userSpaceOnUse">
+      <rect width="20" height="20" fill="#101020"/>
+      <rect width="10" height="10" fill="#1a1a30"/>
+      <rect x="10" y="10" width="10" height="10" fill="#1a1a30"/>
+    </pattern>
+
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="5"/>
+    </filter>
+    <filter id="soft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="28"/>
+    </filter>
+    <filter id="neon" x="-10%" y="-200%" width="120%" height="500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <!-- === BACKGROUND === -->
+  <rect width="2100" height="900" fill="url(#bg)"/>
+
+  <!-- Warm ambient light — center -->
+  <ellipse cx="1050" cy="420" rx="800" ry="380" fill="#ff2d78" opacity="0.012" filter="url(#soft)"/>
+
+  <!-- === TOP ACCENT — vermillion === -->
+  <rect y="0" width="2100" height="2.5" fill="#d4402a" opacity="0.65"/>
+  <rect y="0" width="2100" height="8" fill="#d4402a" opacity="0.06" filter="url(#neon)"/>
+
+  <!-- === LEFT: TYPOGRAPHY === -->
+
+  <!-- Vermillion accent bar — hanko style -->
+  <rect x="78" y="284" width="4" height="48" rx="2" fill="#d4402a"/>
+
+  <!-- Label — kincha gold -->
+  <text x="96" y="316" fill="#c9a060" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" letter-spacing="6.5">COMFYUI CUSTOM NODE</text>
+
+  <!-- Title — bright, high contrast -->
+  <text x="72" y="444" fill="#f2efe8" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="126" font-weight="800" letter-spacing="-5">MatAnyone2</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="510" fill="#7a6e96" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="34" font-weight="400" letter-spacing="1">Interactive Video Matting</text>
+
+  <!-- Vermillion rule -->
+  <rect x="80" y="538" width="52" height="2.5" rx="1" fill="#d4402a" opacity="0.55"/>
+
+  <!-- Tagline -->
+  <text x="80" y="590" fill="#3e3858" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="500" letter-spacing="0.3">Click points. Propagate. Done.</text>
+
+  <!-- === PANEL 1: SELECT === -->
+  <g transform="translate(840 80)">
+    <rect width="360" height="700" rx="14" fill="url(#twilight)"/>
+
+    <!-- Warm horizon glow -->
+    <ellipse cx="180" cy="220" rx="180" ry="40" fill="#d4402a" opacity="0.06" filter="url(#soft)"/>
+
+    <!-- Ground plane -->
+    <rect y="440" width="360" height="260" rx="0" fill="#0c081a" opacity="0.6"/>
+
+    <!-- Warm glow behind figure -->
+    <ellipse cx="180" cy="380" rx="100" ry="180" fill="#d4a07a" opacity="0.06" filter="url(#soft)"/>
+
+    <!-- FIGURE — ultra-simple geometric: circle head + rounded rect body -->
+    <!-- Head -->
+    <circle cx="180" cy="220" r="42" fill="url(#skin)"/>
+    <!-- Hair — simple cap shape -->
+    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#1c1418"/>
+    <!-- Body/torso — single rounded rect -->
+    <rect x="110" y="274" width="140" height="240" rx="28" fill="#2e4a72"/>
+    <!-- Shoulder curves -->
+    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#2e4a72"/>
+    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#2e4a72"/>
+    <!-- Neck -->
+    <rect x="164" y="254" width="32" height="28" rx="8" fill="url(#skin)"/>
+
+    <!-- SAM MASK OVERLAY — the teal selection tint SAM shows on selected region -->
+    <!-- Matches the figure shape exactly, semi-transparent -->
+    <circle cx="180" cy="220" r="42" fill="#22ccaa" opacity="0.3"/>
+    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#22ccaa" opacity="0.3"/>
+    <rect x="110" y="274" width="140" height="240" rx="28" fill="#22ccaa" opacity="0.3"/>
+    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#22ccaa" opacity="0.3"/>
+    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#22ccaa" opacity="0.3"/>
+    <rect x="164" y="254" width="32" height="28" rx="8" fill="#22ccaa" opacity="0.3"/>
+    <!-- Mask edge outline — dashed, like a selection boundary -->
+    <circle cx="180" cy="220" r="43" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/>
+    <rect x="109" y="273" width="142" height="242" rx="29" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.4"/>
+    <ellipse cx="110" cy="300" rx="31" ry="25" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.35"/>
+    <ellipse cx="250" cy="300" rx="31" ry="25" fill="none" stroke="#44ffcc" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.35"/>
+
+    <!-- SAM FOREGROUND POINTS — bright green -->
+    <circle cx="180" cy="210" r="12" fill="#22ff6e" opacity="0.2" filter="url(#glow)"/>
+    <circle cx="180" cy="210" r="7.5" fill="#22ff6e"/>
+    <circle cx="180" cy="210" r="3" fill="#fff"/>
+
+    <circle cx="160" cy="360" r="12" fill="#22ff6e" opacity="0.2" filter="url(#glow)"/>
+    <circle cx="160" cy="360" r="7.5" fill="#22ff6e"/>
+    <circle cx="160" cy="360" r="3" fill="#fff"/>
+
+    <circle cx="200" cy="460" r="12" fill="#22ff6e" opacity="0.2" filter="url(#glow)"/>
+    <circle cx="200" cy="460" r="7.5" fill="#22ff6e"/>
+    <circle cx="200" cy="460" r="3" fill="#fff"/>
+
+    <!-- SAM BACKGROUND POINTS — vermillion -->
+    <circle cx="46" cy="300" r="12" fill="#d4402a" opacity="0.2" filter="url(#glow)"/>
+    <circle cx="46" cy="300" r="7.5" fill="#d4402a"/>
+    <circle cx="46" cy="300" r="3" fill="#fff"/>
+
+    <circle cx="314" cy="480" r="12" fill="#d4402a" opacity="0.2" filter="url(#glow)"/>
+    <circle cx="314" cy="480" r="7.5" fill="#d4402a"/>
+    <circle cx="314" cy="480" r="3" fill="#fff"/>
+
+    <text x="180" y="738" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">SELECT</text>
+  </g>
+
+  <!-- Arrow 1 — kincha gold -->
+  <g transform="translate(1212 430)" opacity="0.3">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#c9a060" stroke-width="1.5"/>
+    <polygon points="28,-4 36,0 28,4" fill="#c9a060"/>
+  </g>
+
+  <!-- === PANEL 2: FOREGROUND === -->
+  <g transform="translate(1260 80)">
+    <rect width="360" height="700" rx="14" fill="#040408"/>
+
+    <!-- Subtle rim light -->
+    <ellipse cx="180" cy="380" rx="60" ry="120" fill="#c9a060" opacity="0.02" filter="url(#soft)"/>
+
+    <!-- Same figure — clean black bg -->
+    <circle cx="180" cy="220" r="42" fill="url(#skin)"/>
+    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#1c1418"/>
+    <rect x="110" y="274" width="140" height="240" rx="28" fill="#2e4a72"/>
+    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#2e4a72"/>
+    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#2e4a72"/>
+    <rect x="164" y="254" width="32" height="28" rx="8" fill="url(#skin)"/>
+
+    <text x="180" y="738" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">FOREGROUND</text>
+  </g>
+
+  <!-- Arrow 2 -->
+  <g transform="translate(1632 430)" opacity="0.3">
+    <line x1="0" y1="0" x2="28" y2="0" stroke="#c9a060" stroke-width="1.5"/>
+    <polygon points="28,-4 36,0 28,4" fill="#c9a060"/>
+  </g>
+
+  <!-- === PANEL 3: ALPHA === -->
+  <g transform="translate(1680 80)">
+    <rect width="360" height="700" rx="14" fill="url(#checker)"/>
+
+    <!-- White matte — same simple shapes -->
+    <circle cx="180" cy="220" r="42" fill="#ffffff"/>
+    <path d="M138,210 C138,178 156,158 180,158 C204,158 222,178 222,210 C222,198 206,184 180,184 C154,184 138,198 138,210 Z" fill="#ffffff"/>
+    <rect x="110" y="274" width="140" height="240" rx="28" fill="#ffffff"/>
+    <ellipse cx="110" cy="300" rx="30" ry="24" fill="#ffffff"/>
+    <ellipse cx="250" cy="300" rx="30" ry="24" fill="#ffffff"/>
+    <rect x="164" y="254" width="32" height="28" rx="8" fill="#ffffff"/>
+
+    <text x="180" y="738" fill="#6a6088" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="4" text-anchor="middle">ALPHA</text>
+  </g>
+
+  <!-- === BOTTOM === -->
+  <text x="2024" y="862" fill="#2e2848" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="500" text-anchor="end">dreamrec</text>
+
+  <!-- Bottom accent — deep vermillion -->
+  <rect y="897" width="2100" height="3" fill="#d4402a" opacity="0.25"/>
+</svg>

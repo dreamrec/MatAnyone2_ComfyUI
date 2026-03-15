@@ -1,0 +1,38 @@
+name: Smoke Test
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Validate files
+        run: |
+          python -m compileall __init__.py nodes.py install.py
+          python - <<'PY'
+          import tomllib
+          from pathlib import Path
+
+          pyproject = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))
+          assert pyproject["project"]["name"] == "matanyone2-video-matting"
+          assert Path("README.md").exists()
+          assert Path("LICENSE").exists()
+          assert Path("assets/registry-banner.svg").exists()
+          assert Path("assets/demo-showcase-20260315.png").exists()
+          assert Path("web/matanyone_editor.js").exists()
+          assert Path("workflows/matanyone2_demo.json").exists()
+          print("Smoke validation passed.")
+          PY

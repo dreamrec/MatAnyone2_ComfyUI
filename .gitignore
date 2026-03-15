@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+
+# Vendored repos (cloned by install.py)
+vendor/
+models/
+
+# ComfyUI outputs
+output/
+temp/
+input/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+.venv/
+.pytest_cache/
+*.swp
+*.swo
+
+# Models (too large for git)
+*.pth
+*.safetensors
+*.ckpt
+*.bin
+demo png.png
