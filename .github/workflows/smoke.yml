@@ -30,7 +30,7 @@ jobs:
           assert pyproject["project"]["name"] == "matanyone2-video-matting"
           assert Path("README.md").exists()
           assert Path("LICENSE").exists()
-          assert Path("assets/registry-banner.svg").exists()
+          assert Path("assets/registry-banner-20260315b.svg").exists()
           assert Path("assets/demo-showcase-20260315.png").exists()
           assert Path("web/matanyone_editor.js").exists()
           assert Path("workflows/matanyone2_demo.json").exists()

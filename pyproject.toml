@@ -30,4 +30,4 @@ Documentation = "https://github.com/dreamrec/MatAnyone2_ComfyUI#readme"
 [tool.comfy]
 PublisherId = "dreamrec"
 DisplayName = "MatAnyone2 Video Matting"
-Banner = "https://raw.githubusercontent.com/dreamrec/MatAnyone2_ComfyUI/main/assets/registry-banner.svg"
+Banner = "https://raw.githubusercontent.com/dreamrec/MatAnyone2_ComfyUI/main/assets/registry-banner-20260315b.svg"

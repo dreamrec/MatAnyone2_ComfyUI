@@ -1,4 +1,4 @@
-![MatAnyone2 banner](assets/registry-banner.svg)
+![MatAnyone2 banner](assets/registry-banner-20260315b.svg)
 
 # MatAnyone2 Video Matting for ComfyUI
 
