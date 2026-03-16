@@ -16,6 +16,8 @@ DEMO_WORKFLOW_NAMES = (
     "matanyone2_full_demo.json",
     "matanyone2_vhs_demo.json",
 )
+EXTENDED_DEMO_SOURCE = ROOT / "workflows" / "matanyone2_extended_demo.json"
+EXTENDED_DEMO_NAME = "matanyone2_extended_demo.json"
 
 VENDORS = (
     {
@@ -128,6 +130,16 @@ def ensure_demo_workflows() -> None:
         else:
             print(f"Copying bundled demo workflow to {destination}")
         shutil.copy2(DEMO_WORKFLOW_SOURCE, destination)
+
+    if EXTENDED_DEMO_SOURCE.exists():
+        ext_dest = workflow_dir / EXTENDED_DEMO_NAME
+        ext_hash = _file_sha256(EXTENDED_DEMO_SOURCE)
+        if ext_dest.exists() and _file_sha256(ext_dest) == ext_hash:
+            print(f"Using bundled demo workflow at {ext_dest}")
+        else:
+            action = "Refreshing" if ext_dest.exists() else "Copying"
+            print(f"{action} bundled demo workflow to {ext_dest}")
+            shutil.copy2(EXTENDED_DEMO_SOURCE, ext_dest)
 
 
 def ensure_vendor_bundle(vendor: dict[str, str | Path | tuple[str, ...]]) -> None:

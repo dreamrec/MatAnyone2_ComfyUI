@@ -60,7 +60,9 @@ Models download automatically on first use if they are missing.
 | [SAM ViT-L](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth) | `ComfyUI/models/sams/` | Yes |
 | [SAM ViT-B](https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth) | `ComfyUI/models/sams/` | Yes |
 
-## Included Workflow
+## Included Workflows
+
+### Basic Demo
 
 `workflows/matanyone2_demo.json` is a ready-to-run example that wires video loading, frame selection, the interactive editor, and final matte export.
 
@@ -78,6 +80,24 @@ How to use it:
 4. Left-click for foreground points and right-click for background points.
 5. Click `Apply` in the editor.
 6. Queue again to render the full matte outputs.
+
+### Extended Demo (All 12 Nodes)
+
+`workflows/matanyone2_extended_demo.json` showcases every node in the pack with two parallel paths:
+
+**Interactive path** (top) — the same editor-based flow from the basic demo.
+
+**Scripted/programmatic path** (bottom) — builds SAM prompts entirely in-node, no editor needed:
+
+```text
+SAM Loader ──────────────────────────────────────────────────────┐
+                                                                 │
+Prompt Start → Add Point (+) → Add Point (-) → SAM Refine ──→ Merge Masks → Matte
+                                                     ↑              ↑
+Prompt From Text ─────────────────────→ SAM Refine ──┘    Preview Masks
+```
+
+This workflow demonstrates how to use `SAM Loader`, `Prompt Start`, `Add Point`, `Prompt From Text`, `SAM Refine`, `Merge Masks`, and `Preview Masks` for scripted or batch matting without the interactive editor.
 
 ## Gallery
 
